@@ -46,7 +46,7 @@ add_compile_options(
  -fomit-frame-pointer
  "$<$<COMPILE_LANGUAGE:CXX>:-fno-unwind-tables>"
  "$<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>"
- "$<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions>"
+ #"$<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions>"
  "$<$<COMPILE_LANGUAGE:CXX>:-fno-threadsafe-statics>"
  "$<$<COMPILE_LANGUAGE:ASM>:-x assembler-with-cpp>"
  -MMD
