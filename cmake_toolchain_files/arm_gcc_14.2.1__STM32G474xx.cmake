@@ -16,10 +16,6 @@ else()
 	message(SEND_ERROR "Host OS ${CMAKE_HOST_SYSTEM_NAME} is not supported")
 endif()
 
-
-message(STATUS "${CMAKE_HOST_SYSTEM_NAME}")
-
-
 set(CMAKE_SYSTEM_NAME       Generic)
 set(CMAKE_SYSTEM_VERSION    14.2.1)
 set(CMAKE_SYSTEM_PROCESSOR  STM32G474xx)
@@ -31,8 +27,11 @@ set(toolchain_lib_dir  "${toolchain_dir}/arm-none-eabi/lib")
 
 set(ARM_OPTIONS
  -mcpu=cortex-m4
+ -mthumb
  -mfpu=fpv4-sp-d16
  -mfloat-abi=hard
+ # --specs=nano.specs
+ --specs=nosys.specs
  -u_printf_float
  -u_scanf_float
 )
@@ -44,15 +43,15 @@ add_compile_options(
  -ffunction-sections
  -fdata-sections
  -fomit-frame-pointer
- "$<$<COMPILE_LANGUAGE:CXX>:-fno-unwind-tables>"
- "$<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>"
+ "$<$<COMPILE_LANGUAGE:CXX>:-fexceptions>"
+ "$<$<COMPILE_LANGUAGE:CXX>:-funwind-tables>"
  #"$<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions>"
+ #"$<$<COMPILE_LANGUAGE:CXX>:-fno-unwind-tables>"
+ "$<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>"
  "$<$<COMPILE_LANGUAGE:CXX>:-fno-threadsafe-statics>"
  "$<$<COMPILE_LANGUAGE:ASM>:-x assembler-with-cpp>"
  -MMD
  -MP
- --specs=nano.specs
- --specs=nosys.specs
  )
 
 add_link_options(
@@ -62,8 +61,6 @@ add_link_options(
  -Wl,--no-warn-rwx-segments
  -Wl,-lstdc++
  -Wl,-lsupc++
- --specs=nano.specs
- --specs=nosys.specs
 )
 
 
